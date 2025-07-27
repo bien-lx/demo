@@ -6,7 +6,7 @@
 
   tasks:
     - name: Lấy thông tin các LIF
-      na_ontap_interface_info:
+      na_ontap_info:
         hostname: "{{ ansible_host }}"
         username: "{{ netapp_username }}"
         password: "{{ netapp_password }}"
