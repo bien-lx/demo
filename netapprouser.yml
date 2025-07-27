@@ -1,22 +1,27 @@
-- name: Liệt kê IP các LIF trên NetApp Cluster
+- name: Lấy phiên bản ONTAP từ cluster
   hosts: localhost
   gather_facts: no
   collections:
     - netapp.ontap
 
   tasks:
-    - name: Lấy thông tin các LIF
+    - name: Thu thập thông tin phiên bản ONTAP
       na_ontap_rest_info:
-        hostname: "{{ ansible_host }}"
-        username: "{{ netapp_username }}"
-        password: "{{ netapp_password }}"
+        hostname: "{{ ontap_hostname }}"
+        username: "{{ ontap_username }}"
+        password: "{{ ontap_password }}"
         https: true
         validate_certs: false
-      register: lif_info
+        use_rest: always
+        gather_subset:
+          - cluster_node_info
+        fields:
+          - version
+      register: ontap_info
 
-    - name: In ra danh sách IP của các LIF
+    - name: In ra phiên bản ONTAP
       debug:
         msg: |
-          {% for lif in lif_info.ontap_info.interfaces %}
-          LIF: {{ lif.interface_name }} - IP: {{ lif.address }} - Vserver: {{ lif.vserver }}
+          {% for node in ontap_info.ontap_info['cluster/nodes'].records %}
+          Node: {{ node.name }} - Version: {{ node.version.full.split(':')[0] }}
           {% endfor %}
