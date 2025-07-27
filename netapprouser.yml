@@ -11,6 +11,7 @@
         username: "{{ netapp_username }}"
         password: "{{ netapp_password }}"
         https: true
+        validate_certs: false
       register: lif_info
 
     - name: In ra danh sách IP của các LIF
