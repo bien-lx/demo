@@ -21,7 +21,4 @@
 
     - name: In ra phiên bản ONTAP
       debug:
-        msg: |
-          {% for node in ontap_info.ontap_info['cluster/nodes'].records %}
-          Node: {{ node.name }} - Version: {{ node.version.full.split(':')[0] }}
-          {% endfor %}
+        msg: "{{ info }}"
