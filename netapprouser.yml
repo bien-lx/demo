@@ -1,5 +1,6 @@
 - name: Lấy phiên bản ONTAP từ cluster
   hosts: localhost
+  ansible_connection: local
   gather_facts: no
   collections:
     - netapp.ontap
