@@ -1,20 +1,21 @@
-- name: Tạo user readonly trên các cluster NetApp
+- name: Liệt kê IP các LIF trên NetApp Cluster
   hosts: localhost
   gather_facts: no
   collections:
     - netapp.ontap
 
   tasks:
-    - name: Tạo user readonly
-      na_ontap_user:
-        state: present
-        name: readonly_user
-        applications:
-          - console
-          - ssh
-        authentication_method: password
-        set_password: readonly_password123
-        role_name: readonly
+    - name: Lấy thông tin các LIF
+      na_ontap_interface_info:
         hostname: "{{ ansible_host }}"
         username: "{{ netapp_username }}"
         password: "{{ netapp_password }}"
+        https: true
+      register: lif_info
+
+    - name: In ra danh sách IP của các LIF
+      debug:
+        msg: |
+          {% for lif in lif_info.ontap_info.interfaces %}
+          LIF: {{ lif.interface_name }} - IP: {{ lif.address }} - Vserver: {{ lif.vserver }}
+          {% endfor %}
