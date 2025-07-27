@@ -7,7 +7,7 @@
   tasks:
     - name: Thu thập thông tin phiên bản ONTAP
       na_ontap_rest_info:
-        hostname: "{{ ansible_host }}"
+        hostname: "{{ netapp_clusters }}"
         username: "{{ netapp_username }}"
         password: "{{ netapp_password }}"
         https: true
