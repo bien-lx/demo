@@ -21,4 +21,4 @@
 
     - name: In ra phiên bản ONTAP
       debug:
-        msg: "{{ info }}"
+        msg: "{{ ontap_info }}"
