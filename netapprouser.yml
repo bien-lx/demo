@@ -1,5 +1,5 @@
 - name: Tạo user readonly trên các cluster NetApp
-  hosts: netapp_clusters
+  hosts: localhost
   gather_facts: no
   collections:
     - netapp.ontap
