@@ -1,25 +1,20 @@
----
-- name: Tạo user readonly trên ONTAP cluster
-  hosts: localhost
+- name: Tạo user readonly trên các cluster NetApp
+  hosts: netapp_clusters
   gather_facts: no
   collections:
     - netapp.ontap
 
   tasks:
-    - name: Tạo người dùng mới với quyền readonly
-      netapp.ontap.na_ontap_user:
-        hostname: "{{ ontap_hostname }}"
-        username: "{{ ontap_admin }}"
-        password: "{{ ontap_password }}"
-        https: true
+    - name: Tạo user readonly
+      na_ontap_user:
         state: present
-        name: "readonly_user"
+        name: readonly_user
         applications:
           - console
-          - http
-          - ontapi
           - ssh
-        roles:
-          - readonly
         authentication_method: password
-        comment: "User chỉ có quyền đọc"
+        set_password: readonly_password123
+        role_name: readonly
+        hostname: "{{ ansible_host }}"
+        username: "{{ netapp_username }}"
+        password: "{{ netapp_password }}"
