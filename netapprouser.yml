@@ -7,9 +7,9 @@
   tasks:
     - name: Thu thập thông tin phiên bản ONTAP
       na_ontap_rest_info:
-        hostname: "{{ ontap_hostname }}"
-        username: "{{ ontap_username }}"
-        password: "{{ ontap_password }}"
+        hostname: "{{ ansible_hostname }}"
+        username: "{{ netapp_username }}"
+        password: "{{ netapp_password }}"
         https: true
         validate_certs: false
         use_rest: always
